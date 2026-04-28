@@ -1,0 +1,840 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <title>Destination Guide | Official Travel Intelligence</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,400;14..32,500;14..32,600;14..32,700;14..32,800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            background: #f0f4f9;
+            color: #0f172a;
+            line-height: 1.5;
+        }
+
+        /* ========== HEADER ========== */
+        .site-header {
+            background: #ffffff;
+            border-bottom: 1px solid #e2e8f0;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.02);
+        }
+
+        .header-container {
+            max-width: 1280px;
+            margin: 0 auto;
+            padding: 0 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            height: 70px;
+        }
+
+        .logo-area {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .logo-mark {
+            width: 36px;
+            height: 36px;
+            background: #0f3b5c;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .logo-mark i {
+            color: white;
+            font-size: 1.1rem;
+        }
+
+        .logo-text {
+            font-size: 1.3rem;
+            font-weight: 700;
+            color: #0f172a;
+        }
+
+        .logo-text span {
+            color: #0f3b5c;
+            font-weight: 800;
+        }
+
+        .nav-back {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            background: #f8fafc;
+            padding: 8px 18px;
+            border-radius: 40px;
+            text-decoration: none;
+            font-size: 0.85rem;
+            font-weight: 500;
+            color: #1e293b;
+            transition: all 0.2s;
+            border: 1px solid #e2e8f0;
+        }
+
+        .nav-back i {
+            font-size: 0.8rem;
+        }
+
+        .nav-back:hover {
+            background: #0f3b5c;
+            color: white;
+            border-color: #0f3b5c;
+        }
+
+        /* ========== MAIN LAYOUT ========== */
+        .main-wrapper {
+            max-width: 1280px;
+            margin: 2rem auto;
+            padding: 0 2rem;
+        }
+
+        /* Breadcrumb */
+        .breadcrumb-nav {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin-bottom: 1.75rem;
+            font-size: 0.8rem;
+            flex-wrap: wrap;
+        }
+
+        .breadcrumb-nav a {
+            color: #5b6e8c;
+            text-decoration: none;
+            transition: color 0.2s;
+        }
+
+        .breadcrumb-nav a:hover {
+            color: #0f3b5c;
+        }
+
+        .breadcrumb-sep {
+            color: #cbd5e1;
+        }
+
+        .breadcrumb-current {
+            color: #0f3b5c;
+            font-weight: 600;
+        }
+
+        /* ========== HERO CARD WITH PROPER IMAGE FITTING ========== */
+        .hero-card {
+            background: #ffffff;
+            border-radius: 24px;
+            overflow: hidden;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.04), 0 1px 2px rgba(0, 0, 0, 0.02);
+            margin-bottom: 2rem;
+            border: 1px solid #eef2f8;
+        }
+
+        .image-frame {
+            width: 100%;
+            min-height: 320px;
+            max-height: 520px;
+            background: #f8fafc;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+            position: relative;
+            border-radius: 24px 24px 0 0;
+        }
+
+        .place-hero-img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            object-position: center;
+            display: block;
+            transition: transform 0.4s ease;
+        }
+
+        .place-hero-img:hover {
+            transform: scale(1.01);
+        }
+
+        .image-fallback {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 12px;
+            color: #94a3b8;
+            text-align: center;
+            padding: 3rem;
+        }
+
+        .image-fallback i {
+            font-size: 3.5rem;
+            opacity: 0.6;
+        }
+
+        /* ========== CONTENT CARD ========== */
+        .content-card {
+            background: #ffffff;
+            border-radius: 24px;
+            padding: 2rem 2rem;
+            box-shadow: 0 4px 14px rgba(0, 0, 0, 0.04);
+            border: 1px solid #eef2f8;
+        }
+
+        /* Title Block */
+        .title-block {
+            margin-bottom: 1.5rem;
+            padding-bottom: 1.25rem;
+            border-bottom: 2px solid #eef2f8;
+        }
+
+        .title-block h1 {
+            font-size: 2.1rem;
+            font-weight: 700;
+            letter-spacing: -0.02em;
+            color: #0f172a;
+            line-height: 1.3;
+        }
+
+        /* Entry Fee Card */
+        .fee-card {
+            border-radius: 16px;
+            margin-bottom: 1.5rem;
+            display: inline-flex;
+            align-items: center;
+            gap: 12px;
+            padding: 0.8rem 1.4rem;
+        }
+
+        .fee-card.paid {
+            background: linear-gradient(135deg, #0f3b5c 0%, #1a4a6e 100%);
+            box-shadow: 0 6px 14px rgba(15, 59, 92, 0.25);
+        }
+
+        .fee-card.free {
+            background: linear-gradient(135deg, #1e6f5c 0%, #2c8f6e 100%);
+            box-shadow: 0 6px 14px rgba(30, 111, 92, 0.25);
+        }
+
+        .fee-icon {
+            width: 40px;
+            height: 40px;
+            background: rgba(255, 255, 255, 0.15);
+            border-radius: 14px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .fee-icon i {
+            font-size: 1.2rem;
+            color: white;
+        }
+
+        .fee-info {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .fee-label {
+            font-size: 0.65rem;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            color: rgba(255, 255, 255, 0.7);
+        }
+
+        .fee-amount {
+            font-size: 1.5rem;
+            font-weight: 800;
+            color: white;
+            line-height: 1.2;
+        }
+
+        .fee-amount small {
+            font-size: 0.75rem;
+            font-weight: 500;
+        }
+
+        .free-badge {
+            display: inline-block;
+            background: rgba(255, 255, 255, 0.2);
+            padding: 0.2rem 0.8rem;
+            border-radius: 40px;
+            font-size: 0.7rem;
+            font-weight: 600;
+            margin-left: 10px;
+            letter-spacing: 0.5px;
+        }
+
+        /* Description Block */
+        .description-block {
+            background: #f8fafc;
+            border-radius: 20px;
+            padding: 1.5rem 1.75rem;
+            margin-bottom: 2rem;
+            border-left: 5px solid #0f3b5c;
+        }
+
+        .description-block h3 {
+            font-size: 0.8rem;
+            text-transform: uppercase;
+            letter-spacing: 1.2px;
+            font-weight: 700;
+            color: #0f3b5c;
+            margin-bottom: 0.75rem;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .description-block p {
+            color: #334155;
+            line-height: 1.7;
+            font-size: 0.95rem;
+            white-space: pre-wrap;
+        }
+
+        /* Details Grid */
+        .details-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1.25rem;
+            margin-bottom: 2rem;
+        }
+
+        .detail-box {
+            background: #ffffff;
+            border: 1px solid #e9eff5;
+            border-radius: 20px;
+            padding: 1.2rem 1.2rem;
+            transition: all 0.2s ease;
+        }
+
+        .detail-box:hover {
+            border-color: #cbdde9;
+            box-shadow: 0 6px 14px rgba(0, 0, 0, 0.03);
+            transform: translateY(-2px);
+        }
+
+        .detail-header {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 0.75rem;
+        }
+
+        .detail-header i {
+            width: 34px;
+            height: 34px;
+            background: #eef3fc;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1rem;
+            color: #0f3b5c;
+        }
+
+        .detail-header span {
+            font-size: 0.7rem;
+            text-transform: uppercase;
+            font-weight: 700;
+            letter-spacing: 0.5px;
+            color: #5b6e8c;
+        }
+
+        .detail-content {
+            font-size: 1rem;
+            font-weight: 600;
+            color: #0f172a;
+            word-break: break-word;
+            padding-left: 44px;
+        }
+
+        .country-badge {
+            display: inline-block;
+            background: #eef2ff;
+            padding: 0.2rem 0.6rem;
+            border-radius: 30px;
+            font-size: 0.7rem;
+            font-weight: 500;
+            color: #0f3b5c;
+            margin-left: 6px;
+        }
+
+        .best-time-value {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            flex-wrap: wrap;
+        }
+
+        .best-time-value i {
+            color: #2d6a4f;
+            font-size: 0.8rem;
+        }
+
+        /* Action Buttons - FIXED CORRECTLY */
+        .action-row {
+            display: flex;
+            gap: 1rem;
+            flex-wrap: wrap;
+            padding-top: 1.25rem;
+            border-top: 1px solid #eef2f8;
+            align-items: center;
+        }
+
+        .btn-primary {
+            background: #0f3b5c;
+            color: white;
+            border: none;
+            padding: 0.8rem 2rem;
+            border-radius: 50px;
+            font-weight: 600;
+            font-size: 0.85rem;
+            cursor: pointer;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            transition: all 0.2s;
+        }
+
+        .btn-primary:hover {
+            background: #1a4a6e;
+            transform: translateY(-1px);
+            box-shadow: 0 6px 14px rgba(15, 59, 92, 0.25);
+        }
+
+        .btn-outline {
+            background: #ffffff;
+            border: 1.5px solid #cbd5e1;
+            color: #475569;
+            padding: 0.8rem 2rem;
+            border-radius: 50px;
+            font-weight: 600;
+            font-size: 0.85rem;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            transition: all 0.2s;
+            cursor: pointer;
+        }
+
+        .btn-outline:hover {
+            border-color: #0f3b5c;
+            color: #0f3b5c;
+            background: #f8fafc;
+        }
+
+        .btn-delete {
+            background: #ffffff;
+            border: 1.5px solid #f1b0b7;
+            color: #b91c1c;
+            padding: 0.8rem 2rem;
+            border-radius: 50px;
+            font-weight: 600;
+            font-size: 0.85rem;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            transition: all 0.2s;
+        }
+
+        .btn-delete:hover {
+            background: #fee2e2;
+            border-color: #dc2626;
+            color: #991b1b;
+            transform: translateY(-1px);
+        }
+
+        /* Footer */
+        .site-footer {
+            background: #0f172a;
+            color: #94a3b8;
+            margin-top: 3rem;
+            padding: 2rem;
+            text-align: center;
+        }
+
+        .footer-inner {
+            max-width: 1280px;
+            margin: 0 auto;
+        }
+
+        .footer-inner p {
+            font-size: 0.8rem;
+        }
+
+        /* ========== RESPONSIVE ========== */
+        @media (max-width: 900px) {
+            .header-container {
+                padding: 0 1.5rem;
+            }
+            .main-wrapper {
+                padding: 0 1.5rem;
+            }
+            .details-grid {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 1rem;
+            }
+            .image-frame {
+                min-height: 320px;
+                max-height: 450px;
+            }
+        }
+
+        @media (max-width: 640px) {
+            .header-container {
+                padding: 0 1rem;
+                height: 60px;
+            }
+            .main-wrapper {
+                padding: 0 1rem;
+                margin: 1rem auto;
+            }
+            .image-frame {
+                min-height: 220px;
+                max-height: 350px;
+            }
+            .content-card {
+                padding: 1.25rem;
+            }
+            .title-block h1 {
+                font-size: 1.6rem;
+            }
+            .fee-amount {
+                font-size: 1.3rem;
+            }
+            .fee-card {
+                padding: 0.7rem 1rem;
+                width: 100%;
+            }
+            .details-grid {
+                grid-template-columns: 1fr;
+                gap: 0.9rem;
+            }
+            .detail-content {
+                padding-left: 44px;
+            }
+            .action-row {
+                flex-direction: column;
+                align-items: stretch;
+            }
+            .btn-primary, .btn-outline, .btn-delete {
+                justify-content: center;
+            }
+        }
+
+        /* Animation */
+        @keyframes cardFade {
+            from {
+                opacity: 0;
+                transform: translateY(12px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .hero-card, .content-card {
+            animation: cardFade 0.4s ease-out;
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header class="site-header">
+        <div class="header-container">
+            <div class="logo-area">
+                <div class="logo-mark">
+                    <i class="fas fa-compass"></i>
+                </div>
+                <div class="logo-text">Official<span>Guide</span></div>
+            </div>
+            <a href="/places" class="nav-back">
+                <i class="fas fa-arrow-left"></i>
+                <span>Directory</span>
+            </a>
+        </div>
+    </header>
+
+    <main class="main-wrapper">
+        <!-- Breadcrumb -->
+        <div class="breadcrumb-nav">
+            <a href="/">Dashboard</a>
+            <span class="breadcrumb-sep">/</span>
+            <a href="/places">Destinations</a>
+            <span class="breadcrumb-sep">/</span>
+            <span class="breadcrumb-current"><%= place.title %></span>
+        </div>
+
+        <!-- Hero Image Card with PROPER IMAGE FITTING -->
+        <div class="hero-card">
+            <div class="image-frame" id="imageFrame">
+                <% if (place.image && place.image.trim() !== '') { %>
+                    <img src="<%= place.image %>" 
+                         alt="<%= place.title %>" 
+                         class="place-hero-img" 
+                         id="heroImage"
+                         loading="eager"
+                         onload="handleImageLoad(this)"
+                         onerror="handleImageError(this)">
+                <% } else { %>
+                    <div class="image-fallback">
+                        <i class="fas fa-mountain-city"></i>
+                        <p>No media available</p>
+                        <small style="font-size: 0.7rem;">Add an image URL to showcase this destination</small>
+                    </div>
+                <% } %>
+            </div>
+        </div>
+
+        <!-- Content Card -->
+        <div class="content-card">
+            <!-- Title -->
+            <div class="title-block">
+                <h1><%= place.title %></h1>
+            </div>
+
+            <!-- ========== ENTRY FEE SECTION ========== -->
+            <% 
+                let priceValue = 0;
+                if (typeof place.price === 'number') {
+                    priceValue = place.price;
+                } else if (typeof place.price === 'string') {
+                    priceValue = parseFloat(place.price);
+                    if (isNaN(priceValue)) priceValue = 0;
+                } else {
+                    priceValue = 0;
+                }
+                
+                const isFree = (priceValue === 0);
+            %>
+            
+            <% if (isFree) { %>
+                <div class="fee-card free">
+                    <div class="fee-icon">
+                        <i class="fas fa-gift"></i>
+                    </div>
+                    <div class="fee-info">
+                        <div class="fee-label">ENTRY FEE</div>
+                        <div class="fee-amount">
+                            FREE ENTRY
+                            <span class="free-badge"><i class="fas fa-check-circle"></i> Complimentary Access</span>
+                        </div>
+                    </div>
+                </div>
+            <% } else { %>
+                <div class="fee-card paid">
+                    <div class="fee-icon">
+                        <i class="fas fa-ticket-alt"></i>
+                    </div>
+                    <div class="fee-info">
+                        <div class="fee-label">OFFICIAL ENTRY FEE</div>
+                        <div class="fee-amount">
+                            $<%= priceValue.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 }) %>
+                            <small>USD / per person</small>
+                        </div>
+                    </div>
+                </div>
+            <% } %>
+
+            <!-- Description Block -->
+            <div class="description-block">
+                <h3>
+                    <i class="fas fa-align-left"></i>
+                    Official Description
+                </h3>
+                <p><%= place.description || 'No official description provided for this destination.' %></p>
+            </div>
+
+            <!-- Details Grid -->
+            <div class="details-grid">
+                <div class="detail-box">
+                    <div class="detail-header">
+                        <i class="fas fa-map-pin"></i>
+                        <span>Location</span>
+                    </div>
+                    <div class="detail-content">
+                        <%= place.location || 'Not specified' %>
+                    </div>
+                </div>
+
+                <div class="detail-box">
+                    <div class="detail-header">
+                        <i class="fas fa-globe-americas"></i>
+                        <span>Country</span>
+                    </div>
+                    <div class="detail-content">
+                        <%= place.country || 'Not specified' %>
+                        <% if (place.country && place.country !== 'Not specified') { %>
+                            <span class="country-badge"><i class="fas fa-flag-checkered"></i> Verified</span>
+                        <% } %>
+                    </div>
+                </div>
+
+                <div class="detail-box">
+                    <div class="detail-header">
+                        <i class="fas fa-calendar-alt"></i>
+                        <span>Seasonal Guide</span>
+                    </div>
+                    <div class="detail-content best-time-value">
+                        <% if (place.BestTimeToVisit && place.BestTimeToVisit.trim() !== '') { %>
+                            <i class="fas fa-leaf"></i>
+                            <span><%= place.BestTimeToVisit %></span>
+                        <% } else if (place.BestTimetoVisit && place.BestTimetoVisit.trim() !== '') { %>
+                            <i class="fas fa-leaf"></i>
+                            <span><%= place.BestTimetoVisit %></span>
+                        <% } else { %>
+                            <span style="color: #94a3b8;">Recommendation pending</span>
+                        <% } %>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Action Buttons - FULLY FIXED DELETE INTEGRATION -->
+            <div class="action-row">
+                <a href="/All-places" class="btn-primary">
+                    <i class="fas fa-arrow-left"></i>
+                    Return to Directory
+                </a>
+                <a href="/new" class="btn-outline">
+                    <i class="fas fa-plus-circle"></i>
+                    Register New Destination
+                </a>
+                <a href="/places/edit/<%= place._id %>?_method=POST" class="btn-outline">
+                    <i class="fas fa-edit"></i>
+                    Edit Destination
+                </a>
+                <!-- CORRECT DELETE FORM WITH PROPER METHOD OVERRIDE -->
+                <form action="/places/<%= place._id %>?_method=DELETE" method="POST" style="display: inline-block; margin:0;" onsubmit="return confirmDelete()">
+                    <button type="submit" class="btn-delete">
+                        <i class="fas fa-trash-alt"></i>
+                        Delete Destination
+                    </button>
+                </form>
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="site-footer">
+        <div class="footer-inner">
+            <p>© 2025 Official Destination Guide — Trusted travel intelligence for global explorers</p>
+            <p style="margin-top: 0.5rem; font-size: 0.7rem;">Verified listings | Official partnerships</p>
+        </div>
+    </footer>
+
+    <script>
+        // Professional image handling with proper fitting
+        function handleImageLoad(img) {
+            const frame = document.getElementById('imageFrame');
+            if (!frame) return;
+            
+            // Ensure image is displayed properly with object-fit cover
+            if (img.naturalWidth && img.naturalHeight) {
+                // Simple verification that image loaded correctly
+                img.style.opacity = '1';
+                img.style.visibility = 'visible';
+                
+                // For extremely tall images, ensure proper containment
+                const aspectRatio = img.naturalWidth / img.naturalHeight;
+                if (aspectRatio < 0.8) {
+                    // Portrait heavy image - ensure object-fit doesnt crop too much
+                    img.style.objectPosition = 'center 30%';
+                } else {
+                    img.style.objectPosition = 'center';
+                }
+            }
+            // Remove any potential placeholder artifacts
+            const fallbackDiv = frame.querySelector('.image-fallback');
+            if (fallbackDiv && img.style.display !== 'none') {
+                // avoid conflict
+            }
+        }
+        
+        function handleImageError(img) {
+            const frame = document.getElementById('imageFrame');
+            if (frame) {
+                // Replace error image with elegant fallback
+                frame.innerHTML = `
+                    <div class="image-fallback">
+                        <i class="fas fa-image-slash"></i>
+                        <p>Image failed to load</p>
+                        <small style="font-size: 0.7rem;">URL could not be retrieved. Verify image address.</small>
+                    </div>
+                `;
+            }
+        }
+        
+        // Confirmation dialog before deletion
+        function confirmDelete() {
+            return confirm("⚠️ Permanently delete this destination?\n\nThis action cannot be undone. All associated data will be removed.");
+        }
+        
+        // Apply image fitting after load and on resize
+        document.addEventListener('DOMContentLoaded', function() {
+            const heroImg = document.getElementById('heroImage');
+            if (heroImg) {
+                if (heroImg.complete && heroImg.naturalWidth > 0) {
+                    handleImageLoad(heroImg);
+                } else if (heroImg.complete && heroImg.naturalWidth === 0) {
+                    handleImageError(heroImg);
+                }
+            }
+            
+            // Handle window resize to adjust image fitting
+            let resizeTimer;
+            window.addEventListener('resize', function() {
+                clearTimeout(resizeTimer);
+                resizeTimer = setTimeout(function() {
+                    const img = document.getElementById('heroImage');
+                    if (img && img.complete && img.naturalWidth > 0 && img.parentElement) {
+                        handleImageLoad(img);
+                    }
+                }, 150);
+            });
+            
+            // Additional safety: Method override detection for delete (ensure POST with _method works)
+            const deleteForms = document.querySelectorAll('form[action*="_method=DELETE"]');
+            deleteForms.forEach(form => {
+                // Make sure they correctly submit as POST but server-side interprets as DELETE
+                if (form.method !== 'POST') {
+                    form.method = 'POST';
+                }
+            });
+        });
+        
+        // Edge case: If the image is still loading but onload already attached, handle fallback correctly
+        window.addEventListener('load', function() {
+            const imgElement = document.getElementById('heroImage');
+            if (imgElement && !imgElement.complete) {
+                // Still not loaded after window load? possibly broken
+                setTimeout(() => {
+                    if (imgElement.naturalWidth === 0 && imgElement.parentElement && !imgElement.parentElement.querySelector('.image-fallback')) {
+                        handleImageError(imgElement);
+                    }
+                }, 2000);
+            }
+        });
+    </script>
+</body>
+</html>

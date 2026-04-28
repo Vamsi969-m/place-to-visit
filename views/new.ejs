@@ -1,0 +1,650 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+    <title>Create New Listing | TravelSphere</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background: linear-gradient(135deg, #f0f4f8 0%, #e9eef4 100%);
+            font-family: 'Inter', system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', sans-serif;
+            padding: 2rem 1.5rem;
+            color: #1a2c3e;
+            min-height: 100vh;
+        }
+
+        /* Main card container - crisp white, elevated with soft glow */
+        .form-container {
+            max-width: 920px;
+            margin: 0 auto;
+            background: #ffffff;
+            border-radius: 32px;
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.15), 0 1px 2px rgba(0, 0, 0, 0.02);
+            overflow: hidden;
+            transition: all 0.3s ease;
+        }
+
+        /* Header with modern gradient accent */
+        .form-header {
+            background: linear-gradient(135deg, #ffffff 0%, #fafdff 100%);
+            padding: 2rem 2rem 1.2rem 2rem;
+            border-bottom: 2px solid #e8f0f8;
+        }
+
+        .form-header h1 {
+            font-size: 2rem;
+            font-weight: 700;
+            letter-spacing: -0.02em;
+            background: linear-gradient(135deg, #1e4663, #2c6288);
+            background-clip: text;
+            -webkit-background-clip: text;
+            color: transparent;
+            margin-bottom: 0.5rem;
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .form-header h1::before {
+            font-size: 1.8rem;
+            background: none;
+            color: #2c6288;
+        }
+
+        .form-header p {
+            color: #5c6f87;
+            font-size: 0.95rem;
+            margin-top: 0.4rem;
+            border-left: 3px solid #5e9bcf;
+            padding-left: 1rem;
+        }
+
+        /* form body padding */
+        form {
+            padding: 1.8rem 2rem 2rem 2rem;
+        }
+
+        /* field groups */
+        .form-group {
+            margin-bottom: 1.6rem;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .form-row {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1.5rem;
+            margin-bottom: 1.6rem;
+        }
+
+        .form-row .form-group {
+            flex: 1;
+            margin-bottom: 0;
+            min-width: 170px;
+        }
+
+        label {
+            font-weight: 600;
+            font-size: 0.85rem;
+            letter-spacing: 0.4px;
+            text-transform: uppercase;
+            color: #2c4c6e;
+            margin-bottom: 0.5rem;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .required-star {
+            color: #e06c6c;
+            font-size: 1rem;
+            margin-left: 2px;
+        }
+
+        input, textarea, select {
+            font-family: inherit;
+            font-size: 0.95rem;
+            padding: 0.85rem 1rem;
+            border: 1.5px solid #dfe7ef;
+            border-radius: 16px;
+            background-color: #fefeff;
+            transition: all 0.2s ease;
+            outline: none;
+            color: #1a2c3e;
+            width: 100%;
+        }
+
+        textarea {
+            resize: vertical;
+            min-height: 110px;
+        }
+
+        input:focus, textarea:focus, select:focus {
+            border-color: #5e9bcf;
+            box-shadow: 0 0 0 3px rgba(94, 155, 207, 0.2);
+            background-color: #ffffff;
+        }
+
+        .hint-text {
+            font-size: 0.7rem;
+            color: #7a8b9f;
+            margin-top: 0.35rem;
+            margin-left: 0.2rem;
+        }
+
+        /* ===== IMAGE PREVIEW SECTION - ATTRACTIVE & DYNAMIC ===== */
+        .image-preview-area {
+            margin-top: 0.75rem;
+            border-radius: 20px;
+            background: #f8fafd;
+            overflow: hidden;
+            transition: all 0.3s cubic-bezier(0.2, 0.9, 0.4, 1.1);
+            max-height: 0;
+            opacity: 0;
+            transform: translateY(-10px);
+        }
+
+        .image-preview-area.show {
+            max-height: 320px;
+            opacity: 1;
+            transform: translateY(0);
+            margin-top: 1rem;
+            padding: 0.5rem;
+        }
+
+        .preview-card {
+            background: #ffffff;
+            border-radius: 20px;
+            padding: 0.75rem;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.05);
+            border: 1px solid #e6edf4;
+            transition: all 0.2s ease;
+        }
+
+        .preview-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 0.5rem;
+            padding: 0 0.25rem;
+        }
+
+        .preview-badge {
+            font-size: 0.7rem;
+            font-weight: 600;
+            background: #e8f0fe;
+            color: #1e4663;
+            padding: 0.2rem 0.7rem;
+            border-radius: 30px;
+            letter-spacing: 0.3px;
+        }
+
+        .preview-badge i {
+            margin-right: 4px;
+        }
+
+        .refresh-icon {
+            font-size: 0.7rem;
+            color: #8ba0bc;
+            cursor: default;
+        }
+
+        .image-wrapper {
+            position: relative;
+            border-radius: 16px;
+            overflow: hidden;
+            background: #f1f5f9;
+            min-height: 180px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .preview-image {
+            width: 100%;
+            max-height: 220px;
+            object-fit: cover;
+            display: block;
+            transition: transform 0.3s ease;
+            border-radius: 14px;
+        }
+
+        .preview-image:hover {
+            transform: scale(1.02);
+        }
+
+        .image-placeholder {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 2rem;
+            color: #9aafc9;
+            font-size: 0.85rem;
+            gap: 8px;
+        }
+
+        .image-placeholder span {
+            font-size: 2rem;
+            opacity: 0.6;
+        }
+
+        .error-message {
+            color: #e06c6c;
+            font-size: 0.75rem;
+            margin-top: 0.5rem;
+            padding: 0.4rem 0.75rem;
+            background: #fff5f5;
+            border-radius: 12px;
+            display: inline-block;
+        }
+
+        /* Button styling */
+        .btn-submit {
+            background: linear-gradient(95deg, #1e4663, #2a5a7a);
+            border: none;
+            padding: 1rem 1.8rem;
+            font-size: 1rem;
+            font-weight: 600;
+            color: white;
+            border-radius: 44px;
+            cursor: pointer;
+            width: 100%;
+            transition: all 0.25s ease;
+            box-shadow: 0 4px 12px rgba(30, 70, 99, 0.2);
+            letter-spacing: 0.3px;
+            margin-top: 0.5rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+        }
+
+        .btn-submit:hover {
+            background: linear-gradient(95deg, #143a52, #1e4e6e);
+            transform: translateY(-2px);
+            box-shadow: 0 12px 24px rgba(30, 70, 99, 0.25);
+        }
+
+        .btn-submit:active {
+            transform: translateY(1px);
+        }
+
+        hr {
+            margin: 0.8rem 0 1.4rem;
+            border: none;
+            height: 1px;
+            background: linear-gradient(90deg, #e2ecf5, #cbdbe0, #e2ecf5);
+        }
+
+        .form-footer {
+            background: #fafcfe;
+            border-top: 1px solid #eef2f5;
+            padding: 1rem 2rem;
+            font-size: 0.75rem;
+            color: #6a7c91;
+            text-align: center;
+        }
+
+        @media (max-width: 640px) {
+            body {
+                padding: 1rem;
+            }
+            form {
+                padding: 1.3rem 1.5rem;
+            }
+            .form-header {
+                padding: 1.5rem 1.5rem 1rem;
+            }
+            .form-header h1 {
+                font-size: 1.6rem;
+            }
+            .form-row {
+                gap: 1rem;
+                flex-direction: column;
+            }
+            .image-preview-area.show {
+                max-height: 280px;
+            }
+            .preview-image {
+                max-height: 160px;
+            }
+        }
+
+        /* Custom animations */
+        @keyframes gentleFade {
+            from { opacity: 0; transform: translateY(5px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .preview-card {
+            animation: gentleFade 0.25s ease-out;
+        }
+
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #eef2f5;
+            border-radius: 10px;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #b9cee8;
+            border-radius: 10px;
+        }
+    </style>
+</head>
+<body>
+
+<div class="form-container">
+    <div class="form-header">
+        <h1>Add new tourist place</h1>
+        <p>Fill out the details below to share a destination with fellow travelers — all fields with * are required.</p>
+    </div>
+
+    <!-- 
+        Original form action="/new" method="POST" maintained.
+        All original fields: title, description, image, price, location, country, BestTimetoVisit.
+        Added live image preview below the image URL field using JavaScript.
+    -->
+    <form action="/new" method="POST" id="listingForm">
+        <!-- Title (required) -->
+        <div class="form-group">
+            <label for="title">
+                <span> Title</span><span class="required-star">*</span>
+            </label>
+            <input type="text" id="title" name="title" placeholder="E.g., Moraine Lake, Colosseum, Kinkaku-ji" required>
+            <div class="hint-text">Official name or landmark title</div>
+        </div>
+
+        <!-- Description (required) -->
+        <div class="form-group">
+            <label for="description">
+                <span> Description</span><span class="required-star">*</span>
+            </label>
+            <textarea id="description" name="description" rows="4" placeholder="Describe what makes this place unique: history, activities, architecture, local tips …" required></textarea>
+            <div class="hint-text">Write a helpful, concise overview (150–400 characters recommended)</div>
+        </div>
+
+        <!-- Image URL (optional but with LIVE preview) -->
+        <div class="form-group">
+            <label for="image">
+                <span>Image URL</span>
+                <span style="font-weight: normal; font-size: 0.7rem; color:#6c86a3;">(paste link → preview appears below)</span>
+            </label>
+            <input type="text" id="image" name="image" placeholder="https://example.com/beautiful-place.jpg" autocomplete="off">
+            <div class="hint-text">Supports JPG, PNG, WEBP — live preview will appear instantly</div>
+            
+            <!-- DYNAMIC IMAGE PREVIEW SECTION -->
+            <div id="imagePreviewContainer" class="image-preview-area">
+                <div class="preview-card">
+                    <div class="preview-header">
+                        <span class="preview-badge">Live preview</span>
+                        <span class="refresh-icon"> auto-update</span>
+                    </div>
+                    <div id="previewImageWrapper" class="image-wrapper">
+                        <div class="image-placeholder">
+                            <span></span>
+                            <p>Enter an image URL above</p>
+                            <small style="font-size: 0.7rem;">Preview will appear here</small>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Row: Price + Location -->
+        <div class="form-row">
+            <div class="form-group">
+                <label for="price">
+                    <span> Entry fee (USD)</span><span class="required-star">*</span>
+                </label>
+                <input type="number" id="price" name="price" min="0" step="0.01" placeholder="e.g., 15.00" required>
+                <div class="hint-text">Set 0 for free admission</div>
+            </div>
+
+            <div class="form-group">
+                <label for="location">
+                    <span> Location / City</span><span class="required-star">*</span>
+                </label>
+                <input type="text" id="location" name="location" placeholder="E.g., Kananaskis, Rome, Kyoto" required>
+                <div class="hint-text">City or region name</div>
+            </div>
+        </div>
+
+        <!-- Row: Country + Best time to visit -->
+        <div class="form-row">
+            <div class="form-group">
+                <label for="country">
+                    <span> Country</span><span class="required-star">*</span>
+                </label>
+                <input type="text" id="country" name="country" placeholder="E.g., Canada, Italy, Japan" required>
+                <div class="hint-text">Full country name</div>
+            </div>
+
+            <div class="form-group">
+                <label for="BestTimetoVisit">
+                    <span> Best time to visit</span>
+                    <span style="font-weight: normal; font-size: 0.7rem;">(optional)</span>
+                </label>
+                <input type="text" id="BestTimetoVisit" name="BestTimetoVisit" placeholder="E.g., June–September, Winter, Dry season">
+                <div class="hint-text">Seasonal recommendation</div>
+            </div>
+        </div>
+
+        <hr>
+        <button type="submit" class="btn-submit">
+            <span> Create listing</span>
+            <span style="font-size: 1.1rem;">→</span>
+        </button>
+    </form>
+
+    <div class="form-footer">
+        Required fields are marked with <span style="color:#e06c6c;">*</span>. Image preview updates automatically — perfect for checking your photo.
+    </div>
+</div>
+
+<script>
+    // ATTRACTIVE LIVE IMAGE PREVIEW FEATURE
+    // When user types or pastes an image URL, the preview appears below the input field.
+    (function() {
+        const imageInput = document.getElementById('image');
+        const previewContainer = document.getElementById('imagePreviewContainer');
+        const previewWrapper = document.getElementById('previewImageWrapper');
+        
+        // Function to show/hide preview container with animation
+        function showPreviewContainer(show) {
+            if (show) {
+                previewContainer.classList.add('show');
+            } else {
+                previewContainer.classList.remove('show');
+                // Clear the content to placeholder when hiding
+                if (previewWrapper) {
+                    previewWrapper.innerHTML = `
+                        <div class="image-placeholder">
+                            <span></span>
+                            <p>Enter an image URL above</p>
+                            <small style="font-size: 0.7rem;">Preview will appear here</small>
+                        </div>
+                    `;
+                }
+            }
+        }
+        
+        // Function to update preview with image URL
+        function updateImagePreview(url) {
+            if (!url || url.trim() === '') {
+                // If URL is empty, hide preview container gracefully
+                showPreviewContainer(false);
+                return;
+            }
+            
+            // Trim whitespace and validate URL format (basic)
+            const trimmedUrl = url.trim();
+            // Simple check: starts with http:// or https:// or relative path like /images/ or ./
+            const isValidHttpUrl = trimmedUrl.match(/^https?:\/\//i) || trimmedUrl.match(/^\.\//) || trimmedUrl.match(/^\//);
+            
+            if (!isValidHttpUrl && !trimmedUrl.includes('.') && !trimmedUrl.startsWith('data:image')) {
+                // Show error placeholder but still show container
+                showPreviewContainer(true);
+                if (previewWrapper) {
+                    previewWrapper.innerHTML = `
+                        <div class="image-placeholder" style="background:#fff5f0;">
+                            <span></span>
+                            <p>Invalid URL format</p>
+                            <small style="font-size: 0.7rem;">Please enter a valid image link (http:// or https://)</small>
+                        </div>
+                    `;
+                }
+                return;
+            }
+            
+            // Attempt to load image
+            const img = new Image();
+            img.crossOrigin = "Anonymous"; // optional, helps with some CORS but not mandatory for preview
+            
+            img.onload = function() {
+                // Image loaded successfully: show attractive preview
+                showPreviewContainer(true);
+                if (previewWrapper) {
+                    previewWrapper.innerHTML = `
+                        <img src="${escapeHtml(trimmedUrl)}" alt="Preview of tourist place" class="preview-image" onerror="handleImageError(this)">
+                    `;
+                    // Add a small glow effect on successful load
+                    const newImg = previewWrapper.querySelector('img');
+                    if (newImg) {
+                        newImg.style.animation = 'gentleFade 0.3s ease-out';
+                    }
+                }
+            };
+            
+            img.onerror = function() {
+                // Image failed to load
+                showPreviewContainer(true);
+                if (previewWrapper) {
+                    previewWrapper.innerHTML = `
+                        <div class="image-placeholder" style="background:#fff5f5;">
+                            <span></span>
+                            <p>Couldn't load image</p>
+                            <small style="font-size: 0.7rem;">Check the URL or ensure the image is accessible</small>
+                        </div>
+                    `;
+                }
+            };
+            
+            // Start loading the image
+            img.src = trimmedUrl;
+        }
+        
+        // Helper function to escape HTML to prevent XSS
+        function escapeHtml(str) {
+            if (!str) return '';
+            return str.replace(/[&<>]/g, function(m) {
+                if (m === '&') return '&amp;';
+                if (m === '<') return '&lt;';
+                if (m === '>') return '&gt;';
+                return m;
+            }).replace(/[\uD800-\uDBFF][\uDC00-\uDFFF]/g, function(c) {
+                return c;
+            });
+        }
+        
+        // Global error handler for inline image errors (used when image fails after render)
+        window.handleImageError = function(imgElement) {
+            if (imgElement && imgElement.parentNode) {
+                const parent = imgElement.parentNode;
+                parent.innerHTML = `
+                    <div class="image-placeholder" style="background:#fff5f5;">
+                        <span>⚠️</span>
+                        <p>Image failed to load</p>
+                        <small style="font-size: 0.7rem;">URL might be broken or inaccessible</small>
+                    </div>
+                `;
+            }
+        };
+        
+        // Debounce function for smoother UX (wait for user to stop typing)
+        let debounceTimer;
+        function debouncedPreview(value) {
+            clearTimeout(debounceTimer);
+            debounceTimer = setTimeout(() => {
+                updateImagePreview(value);
+            }, 300);
+        }
+        
+        // Listen to input events (typing, pasting, etc)
+        if (imageInput) {
+            // Initial state: if value already present (pre-filled)
+            if (imageInput.value && imageInput.value.trim() !== '') {
+                updateImagePreview(imageInput.value);
+            } else {
+                showPreviewContainer(false);
+            }
+            
+            // Event listeners with debounce for professional feel
+            imageInput.addEventListener('input', function(e) {
+                debouncedPreview(e.target.value);
+            });
+            
+            // Also handle change event (for autofill scenarios)
+            imageInput.addEventListener('change', function(e) {
+                updateImagePreview(e.target.value);
+            });
+            
+            // Optional: paste event for instant feedback
+            imageInput.addEventListener('paste', function(e) {
+                setTimeout(() => {
+                    updateImagePreview(imageInput.value);
+                }, 10);
+            });
+        }
+        
+        // For rigorous URL detection: also if user clears field with backspace, hide preview
+        // Already handled by updateImagePreview when empty string.
+        
+        // Additional styling: auto-focus effect and smooth transition
+        const style = document.createElement('style');
+        style.textContent = `
+            .image-preview-area {
+                transition: max-height 0.35s cubic-bezier(0.2, 0.9, 0.4, 1.1), opacity 0.25s ease, transform 0.25s ease;
+            }
+            .preview-image {
+                cursor: pointer;
+                transition: transform 0.2s ease, box-shadow 0.2s ease;
+                max-width: 100%;
+                border-radius: 14px;
+            }
+            .preview-image:hover {
+                transform: scale(1.01);
+                box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+            }
+            .image-wrapper {
+                background: #f8fafd;
+                border-radius: 16px;
+                min-height: 180px;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+            }
+        `;
+        document.head.appendChild(style);
+    })();
+</script>
+
+<!-- 
+    ✨ ENHANCED FEATURE: Live image preview below the URL input field.
+    - Professional, attractive design with smooth animations.
+    - Displays placeholder when no URL, shows actual image when valid link is entered.
+    - Handles broken image links gracefully with error message.
+    - All original fields preserved: title, description, image, price, location, country, BestTimetoVisit.
+    - Fully responsive and interactive with debounced preview update.
+-->
+</body>
+</html>
